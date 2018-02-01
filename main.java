@@ -18,96 +18,139 @@ public class OrdinamentoVoti {
 		int voti[][] = new int[riga][colonna];
 		int i,j, s = 0, x = 0;
 		String y;
+		int scelta = 0;
+		String opz;
 		
-		//Inserimento alunni nel vettore
-		System.out.println("Registrazione alunni: ");
-		for (i=0; i<alunno; i++)
+		//Menù scelta
+		do
 		{
-			System.out.print("Inserisci alunno n. "+i+": ");
-			try {
-				alunni[i] = tastiera.readLine();
-				}
+			System.out.println("1. Inserimento alunni in un vettore;");
+			System.out.println("2. Inserimento discipline in un vettore;");
+			System.out.println("3. Inserimento voti alunni in una matrice;");
+			System.out.println("4. Calcolo/Ordinamento e stampa media di ogni alunno;");
+			System.out.print("Fai una scelta: ");
+			try 
+			{
+				String numeroLetto = tastiera.readLine();
+				scelta = Integer.valueOf(numeroLetto).intValue();
+			}
 			catch (Exception e)
 			{
-				System.out.println("Il valore inserito non è valido! ");
-				i--;
+				System.out.println("Il valore inserito non è valido!");
 			}
-		}
 		
-		//Inserimento materie nel vettore
-		System.out.println("Registrazione discipline ");
-		for (i=0; i<materia; i++)
+		//Switch Case per effettuare la scelta sull'operazione da eseguire
+		switch (scelta)
 		{
-			System.out.print("Inserisci disciplina n. "+i+": ");
-			try {
-					materie[i] = tastiera.readLine();
-				}
-			catch (Exception e)
-			{
-				System.out.println("Il valore inserito non è valido! ");
-			}
-		}
-		
-		//Inserimento voti nella matrice
-		System.out.println("Registrazione valutazioni ");
-		for (i=0; i<riga; i++)
-		{
-			System.out.println("Stai inserendo i voti di "+"'"+alunni[i]+"'");
-			for (j=0; j<colonna; j++)
-			{
-				do {
-				System.out.print("Inserire valutazione nella disciplina "+"'"+materie[j]+"'"+": ");
-				try {
-						String numeroLetto = tastiera.readLine();
-						voti[i][j] = Integer.valueOf(numeroLetto).intValue();
+			case 1:
+				//Inserimento alunni nel vettore
+				System.out.println("Registrazione alunni: ");
+				for (i=0; i<alunno; i++)
+				{
+					System.out.print("Inserisci alunno n. "+i+": ");
+					try {
+						alunni[i] = tastiera.readLine();
+						}
+					catch (Exception e)
+					{
+						System.out.println("Il valore inserito non è valido! ");
+						i--;
 					}
-				catch (Exception e)
+				}
+				break;
+			case 2:
+				//Inserimento materie nel vettore
+				System.out.println("Registrazione discipline ");
+				for (i=0; i<materia; i++)
 				{
-					System.out.println("Il valore inserito non è valido! ");
-					i--;
+					System.out.print("Inserisci disciplina n. "+i+": ");
+					try {
+							materie[i] = tastiera.readLine();
+						}
+					catch (Exception e)
+					{
+						System.out.println("Il valore inserito non è valido! ");
+					}
 				}
-				if (voti[i][j] > 10)
-					System.out.println("Inserisci un valore compreso tra 0 e 10!");
-				}
-				while (voti[i][j] >10);
-			}
-		}
-		
-		//Calcolo media dei voti per alunno
-		for (i=0; i<riga; i++)
-		{
-			s = 0;
-			for (j=0; j<colonna; j++)
-			{
-				s = s + voti[i][j];
-			}
-			media[i] = s / materia;
-		}
-		
-		//Ordinamento media
-		for (i=0; i<riga; i++)
-		{
-			for (j=0; j<colonna-1; j++)
-			{
-				if (media[i] > x)
+				break;
+			case 3:
+				//Inserimento voti nella matrice
+				System.out.println("Registrazione valutazioni ");
+				for (i=0; i<riga; i++)
 				{
-					x = media[i];
-					media[i] = media[j];
-					media[j] = x;
-					
-					y = alunni[i];
-					alunni[i] = alunni[j];
-					alunni[j] = y;
+					System.out.println("Stai inserendo i voti di "+"'"+alunni[i]+"'");
+					for (j=0; j<colonna; j++)
+					{
+						do {
+						System.out.print("Inserire valutazione nella disciplina "+"'"+materie[j]+"'"+": ");
+						try {
+								String numeroLetto = tastiera.readLine();
+								voti[i][j] = Integer.valueOf(numeroLetto).intValue();
+							}
+						catch (Exception e)
+						{
+							System.out.println("Il valore inserito non è valido! ");
+							i--;
+						}
+						if (voti[i][j] > 10)
+							System.out.println("Inserisci un valore compreso tra 0 e 10!");
+						}
+						while (voti[i][j] >10);
+					}
 				}
-			}
+				break;
+			case 4:
+				//Calcolo media dei voti per alunno
+				for (i=0; i<riga; i++)
+				{
+					s = 0;
+					for (j=0; j<colonna; j++)
+					{
+						s = s + voti[i][j];
+					}
+					media[i] = s / materia;
+				}
+				
+				//Ordinamento media
+				for (i=0; i<riga; i++)
+				{
+					for (j=0; j<colonna-1; j++)
+					{
+						if (media[i] > x)
+						{
+							x = media[i];
+							media[i] = media[j];
+							media[j] = x;
+							
+							y = alunni[i];
+							alunni[i] = alunni[j];
+							alunni[j] = y;
+						}
+					}
+				}
+				
+				//Stampa media ordinata
+				System.out.println("Stampa medie alunni ordinate ");
+				for (i=0; i<riga; i++)
+				{
+						System.out.println("Alunno: "+"'"+alunni[i]+"'"+"     Media: "+media[i]);
+				}
+				break;
+				default:
+					System.out.println("Scelta non valida!" );
+					break;
 		}
-		
-		//Stampa media ordinata
-		System.out.println("Stampa medie alunni ordinate ");
-		for (i=0; i<riga; i++)
+		System.out.print("Vuoi eseguire un'altra scelta?(y/n): ");
+		try
 		{
-				System.out.println("Alunno: "+"'"+alunni[i]+"'"+"     Media: "+media[i]);
+			opz = tastiera.readLine();
 		}
-		return;
-	}
+		catch (Exception e)
+		{
+			System.out.println("Il valore inserito non è valido!");
+			return;
+		}
+		}
+		while (opz.equals("y"));
+		}
 }
